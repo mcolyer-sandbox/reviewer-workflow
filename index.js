@@ -16,9 +16,10 @@ try {
 
     console.log("Team:")
     var members = octokit.teams.listMembers({team_id: team["id"]})
-    members.forEach(function(member) {
+    for(var ii=0; i < members.length; i++) {
+      const member = members[ii]
       console.log(JSON.stringify(member))
-    })
+    }
 
     console.log("")
 
