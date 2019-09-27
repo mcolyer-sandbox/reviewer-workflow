@@ -37,7 +37,7 @@ try {
         pull_number: pullRequestNumber,
         team_reviewers: [team["slug"]]
     })
-  })
+  }
 } catch (error) {
   core.setFailed(error.message);
 }
