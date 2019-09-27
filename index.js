@@ -13,7 +13,7 @@ try {
     console.log(JSON.stringify(team));
 
     console.log("Team:")
-    var members = octokit.teams.listMembers(team["id"])
+    var members = octokit.teams.listMembers({team_id: team["id"]})
     members.forEach(function(member) {
       console.log(JSON.stringify(member))
     })
