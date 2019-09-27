@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const octokit = new github.GitHub(process.env.GITHUB_TOKEN);
+const octokit = new github.GitHub(process.env.GITHUB_TOKEN, {log: console});
 
 try {
   const repository = github.context.payload["repository"]
