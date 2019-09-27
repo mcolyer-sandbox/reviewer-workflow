@@ -9,7 +9,7 @@ try {
   const pullRequest = github.context.payload["pull_request"]
   const pullRequestNumber = github.context.payload["number"]
 
-  console.log(JSON.stringify(team));
+  console.log(JSON.stringify(pullRequest["requested_teams"]));
   pullRequest["requested_teams"].keys().forEach(function(key) {
     const team = pullRequest["requested_teams"][key]
     console.log(JSON.stringify(team));
