@@ -14,7 +14,7 @@ try {
     console.log(JSON.stringify(team));
     console.log("")
 
-    (async () => {
+    (async function(){
       console.log("Team: "+team["id"])
       var {data: members} = await octokit.teams.listMembers({team_id: team["id"]})
       console.log(JSON.stringify(members))
@@ -40,7 +40,7 @@ try {
           pull_number: pullRequestNumber,
           team_reviewers: [team["slug"]]
       })
-    })
+    })()
   }
 } catch (error) {
   core.setFailed(error.message);
