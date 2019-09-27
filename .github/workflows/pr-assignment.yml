@@ -1,6 +1,4 @@
-on:
-  pull_request:
-    types: [review_requested]
+on: [pull_request]
 
 jobs:
   assign_member_of_team_for_code_review:
