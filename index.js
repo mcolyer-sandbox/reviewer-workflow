@@ -3,6 +3,7 @@ const github = require('@actions/github');
 const octokit = new github.GitHub(process.env.GITHUB_TOKEN, {log: console});
 
 try {
+  console.log(JSON.stringify(github.context.payload))
   const repository = github.context.payload["repository"]
   const repositoryName = repository["name"]
   const repositoryOwner = repository["owner"]["login"]
