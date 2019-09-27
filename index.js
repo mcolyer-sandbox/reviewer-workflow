@@ -23,12 +23,12 @@ try {
 
     console.log("")
 
-    console.log("Adding "+members.first["login"]+" as a reviewer")
+    console.log("Adding "+members[0]["login"]+" as a reviewer")
     octokit.pulls.createReviewRequest({
         owner: repositoryOwner,
         repo: repositoryName,
         pull_number: pullRequestNumber,
-        reviewers: [members.first["login"]]
+        reviewers: [members[0]["login"]]
     })
 
     console.log("Removing "+team["slug"]+" as a reviewer")
