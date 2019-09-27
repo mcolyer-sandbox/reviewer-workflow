@@ -10,7 +10,7 @@ try {
   const pullRequestNumber = github.context.payload["number"]
 
   console.log(JSON.stringify(pullRequest["requested_teams"]));
-  for(var i=0; i < pullRequest["requested_teams"].length, i++) {
+  for(var i=0; i < pullRequest["requested_teams"].length; i++) {
     const team = pullRequest["requested_teams"][i]
     console.log(JSON.stringify(team));
 
