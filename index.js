@@ -9,10 +9,10 @@ try {
   const pullRequest = github.context.payload["pull_request"]
   const pullRequestNumber = github.context.payload["number"]
 
-  console.log(JSON.stringify(pullRequest["requested_teams"]));
   for(var i=0; i < pullRequest["requested_teams"].length; i++) {
     const team = pullRequest["requested_teams"][i]
     console.log(JSON.stringify(team));
+    console.log("")
 
     console.log("Team:")
     var members = octokit.teams.listMembers({team_id: team["id"]})
