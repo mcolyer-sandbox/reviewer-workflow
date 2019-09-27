@@ -1,0 +1,10 @@
+on:
+  pull_request:
+    types: [review_requested]
+
+jobs:
+  assign_member_of_team_for_code_review:
+    runs-on: ubuntu-latest
+    name: A job to assign member of a team, rather than a team
+    steps:
+    - uses: ./ # Uses an action in the root directory
