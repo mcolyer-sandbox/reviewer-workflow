@@ -2,8 +2,36 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const octokit = new github.GitHub(process.env.GITHUB_TOKEN, {log: console});
 
+async function replaceTeamWithReviewer(repositoryOwner, repositoryName, pullRequestNumber, team){
+  console.log("Team: "+team["id"])
+  var {data: members} = await octokit.teams.listMembers({team_id: team["id"]})
+  console.log(JSON.stringify(members))
+  for(var ii=0; ii < members.length; ii++) {
+    const member = members[ii]
+    console.log(JSON.stringify(member))
+  }
+
+  console.log("")
+
+  console.log("Adding "+members[1]["login"]+" as a reviewer")
+  await octokit.pulls.createReviewRequest({
+      owner: repositoryOwner,
+      repo: repositoryName,
+      pull_number: pullRequestNumber,
+      reviewers: [members[1]["login"]]
+  })
+
+  console.log("Removing "+team["slug"]+" as a reviewer")
+  await octokit.pulls.deleteReviewRequest({
+      owner: repositoryOwner,
+      repo: repositoryName,
+      pull_number: pullRequestNumber,
+      reviewers: [],
+      team_reviewers: [team["slug"]]
+  })
+}
+
 try {
-  console.log(JSON.stringify(github.context.payload))
   const repository = github.context.payload["repository"]
   const repositoryName = repository["name"]
   const repositoryOwner = repository["owner"]["login"]
@@ -15,33 +43,7 @@ try {
     console.log(JSON.stringify(team));
     console.log("")
 
-    (async function(){
-      console.log("Team: "+team["id"])
-      var {data: members} = await octokit.teams.listMembers({team_id: team["id"]})
-      console.log(JSON.stringify(members))
-      for(var ii=0; ii < members.length; ii++) {
-        const member = members[ii]
-        console.log(JSON.stringify(member))
-      }
-
-      console.log("")
-
-      console.log("Adding "+members[0]["login"]+" as a reviewer")
-      await octokit.pulls.createReviewRequest({
-          owner: repositoryOwner,
-          repo: repositoryName,
-          pull_number: pullRequestNumber,
-          reviewers: [members[0]["login"]]
-      })
-
-      console.log("Removing "+team["slug"]+" as a reviewer")
-      await octokit.pulls.deleteReviewRequest({
-          owner: repositoryOwner,
-          repo: repositoryName,
-          pull_number: pullRequestNumber,
-          team_reviewers: [team["slug"]]
-      })
-    })()
+    replaceTeamWithReviewer(repositoryOwner, repositoryName, pullRequestNumber, team);
   }
 } catch (error) {
   core.setFailed(error.message);
