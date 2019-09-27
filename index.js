@@ -14,7 +14,7 @@ try {
     console.log(JSON.stringify(team));
     console.log("")
 
-    console.log("Team:")
+    console.log("Team: "+team["id"])
     var members = octokit.teams.listMembers({team_id: team["id"]})
     console.log(JSON.stringify(members))
     for(var ii=0; ii < members.length; ii++) {
